@@ -18,13 +18,16 @@ class FilmViewModel: ObservableObject{
     
     @Published var is_loading :Bool = true;
     
+    let currentLocale = "&language="+(Locale.preferredLanguages.first ?? "fr-FR");
+    
     func loadMovies(type : String) async{
+        print(currentLocale)
         Task{
             @MainActor in
             is_loading = true
         }
         
-        let apiUrl = URL(string: "https://api.themoviedb.org/3/movie/\(type)?api_key=9a8f7a5168ace33d2334ba1fe14a83fb")!
+        let apiUrl = URL(string: "https://api.themoviedb.org/3/movie/\(type)?api_key=9a8f7a5168ace33d2334ba1fe14a83fb"+currentLocale)!
         let session = URLSession.shared
         do {
             let request = URLRequest(url: apiUrl)
@@ -71,7 +74,7 @@ class FilmViewModel: ObservableObject{
     
     
     func loadAllGenres() async {
-        let apiUrl = URL(string: "https://api.themoviedb.org/3/genre/movie/list?api_key=9a8f7a5168ace33d2334ba1fe14a83fb")!
+        let apiUrl = URL(string: "https://api.themoviedb.org/3/genre/movie/list?api_key=9a8f7a5168ace33d2334ba1fe14a83fb"+currentLocale)!
         let session = URLSession.shared
         do {
             let request = URLRequest(url: apiUrl)
@@ -107,7 +110,7 @@ class FilmViewModel: ObservableObject{
             is_loading = true
         }
         
-        let apiUrl = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9a8f7a5168ace33d2334ba1fe14a83fb&sort_by=popularity.desc&with_genres=\(id_category)")!
+        let apiUrl = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=9a8f7a5168ace33d2334ba1fe14a83fb&sort_by=popularity.desc&with_genres=\(id_category)"+currentLocale)!
         let session = URLSession.shared
         do {
             let request = URLRequest(url: apiUrl)
@@ -145,7 +148,7 @@ class FilmViewModel: ObservableObject{
     
     
     func loadMovie(id : Int) async -> Film?{
-        let apiUrl = URL(string: "https://api.themoviedb.org/3/movie/\(id)?api_key=9a8f7a5168ace33d2334ba1fe14a83fb&append_to_response=videos")!
+        let apiUrl = URL(string: "https://api.themoviedb.org/3/movie/\(id)?api_key=9a8f7a5168ace33d2334ba1fe14a83fb&append_to_response=videos"+currentLocale)!
         let session = URLSession.shared
         do {
             let request = URLRequest(url: apiUrl)
