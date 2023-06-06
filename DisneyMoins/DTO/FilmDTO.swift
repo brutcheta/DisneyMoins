@@ -19,7 +19,7 @@ struct FilmDTO : Decodable
     let videos : VideosResponse;
     
     private enum CodingKeys: String, CodingKey {
-            case title = "original_title"
+            case title = "title"
             case sub_title = "tagline"
             case synopsis = "overview"
             case film_duration = "runtime"

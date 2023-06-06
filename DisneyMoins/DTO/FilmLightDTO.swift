@@ -17,7 +17,7 @@ struct FilmLightDTO : Decodable
     
     private enum CodingKeys: String, CodingKey {
             case id = "id"
-            case title = "original_title"
+            case title = "title"
             case synopsis = "overview"
             case release_date = "release_date"
             case picture = "poster_path"
