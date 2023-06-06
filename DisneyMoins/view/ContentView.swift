@@ -26,27 +26,19 @@ struct ContentView: View {
             
             VStack {
                 if let film = self.film {
-                    HStack(alignment: .center){
-                        AsyncImage(url : URL(string:film.picture)){
-                            phase in
-                            switch phase {
-                            case .empty:
-                                ProgressView()
-                            case .success(let image):
-                                image.resizable()
-                                    .scaledToFill()
-                                    .frame(height: 400)
-                                    .clipped()
-                            case .failure(let error):
-                                // Error view when the image fails to load
-                                Text(error.localizedDescription)
-                            @unknown default:
-                                // Fallback view
-                                Text("Unknown error")
-                            }
+                    GeometryReader { gp in
+                        AsyncImage(url: URL(string: film.picture)) { image in
+                            image
+                                .scaledToFill()
+                                .clipped()
+                                .ignoresSafeArea()
+                            
+                        } placeholder: {
+                            ProgressView()
                         }
+                        .frame(width: gp.size.width, height: 350)
                     }
-                    .frame(maxHeight: 400)
+                    .frame(height: 405)
                     
                     VStack{
                         Text(film.title)
@@ -92,8 +84,11 @@ struct ContentView: View {
                     
                     Text(film.synopsis)
                         .foregroundColor(.gray)
-                        .padding()
-                        .multilineTextAlignment(.center)
+                        .lineLimit(nil) // Remove line limit
+                        .padding(.horizontal)
+                        .fixedSize(horizontal: false, vertical: true)
+                    
+                    
                     
                     HStack{
                         Button {
